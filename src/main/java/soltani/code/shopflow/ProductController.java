@@ -1,8 +1,6 @@
 package soltani.code.shopflow;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -10,10 +8,30 @@ import java.util.List;
 @RequestMapping("api/v2/products")
 public class ProductController {
 
-    @GetMapping()
-    public List<String> getProducts()
+    private final ProductRepository productRepository;
+
+    public ProductController(ProductRepository productRepository)
     {
-        return List.of("test1", "test2", "test3");
+        this.productRepository = productRepository;
     }
+
+    @GetMapping()
+    public List<Product> getProducts()
+    {
+       return productRepository.findAll();
+    }
+
+    @GetMapping("/{id}")
+    public Product getProductById(@PathVariable Long id)
+    {
+        return productRepository.findById(id).orElseThrow();
+    }
+
+    @PostMapping
+    public Product save(@RequestBody Product product)
+    {
+        return productRepository.save(product);
+    }
+
 
 }
