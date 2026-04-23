@@ -1,20 +1,19 @@
-package soltani.code.shopflow;
+package soltani.code.shopflow.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import lombok.Data;
 
 import java.math.BigDecimal;
 
 
+@Data
 @Entity
 @Table(name = "products")
 public class Product {
 
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;

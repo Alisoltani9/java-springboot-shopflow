@@ -1,11 +1,13 @@
-package soltani.code.shopflow;
+package soltani.code.shopflow.controller;
 
 import org.springframework.web.bind.annotation.*;
+import soltani.code.shopflow.entity.Product;
+import soltani.code.shopflow.repository.ProductRepository;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("api/v2/products")
+@RequestMapping("/api/products")
 public class ProductController {
 
     private final ProductRepository productRepository;
@@ -15,7 +17,7 @@ public class ProductController {
         this.productRepository = productRepository;
     }
 
-    @GetMapping()
+    @GetMapping
     public List<Product> getProducts()
     {
        return productRepository.findAll();
