@@ -2,6 +2,7 @@ package soltani.code.shopflow.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
@@ -21,6 +22,7 @@ public class Order {
 
     private String status;
 
+    @CreationTimestamp
     private Timestamp createdAt;
 
 }

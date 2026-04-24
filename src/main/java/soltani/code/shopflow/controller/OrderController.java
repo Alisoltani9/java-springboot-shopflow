@@ -4,8 +4,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import soltani.code.shopflow.entity.Order;
 import soltani.code.shopflow.entity.User;
-import soltani.code.shopflow.repository.OrderRepository;
 import soltani.code.shopflow.repository.UserRepository;
+import soltani.code.shopflow.service.OrderService;
 
 import java.util.List;
 
@@ -13,13 +13,13 @@ import java.util.List;
 @RequestMapping("/api/orders")
 public class OrderController {
 
-    private final OrderRepository orderRepository;
+    private final OrderService orderService;
     private final UserRepository userRepository;
 
-    public OrderController(OrderRepository orderRepository,
+    public OrderController(OrderService orderService,
                            UserRepository userRepository)
     {
-        this.orderRepository = orderRepository;
+        this.orderService = orderService;
         this.userRepository = userRepository;
 
     }
@@ -31,12 +31,12 @@ public class OrderController {
                 .getAuthentication().getName();
 
         User user = userRepository.findByUsername(username).orElseThrow();
-        return orderRepository.findByUserId(user.getId());
+        return orderService.findByUserId(user.getId());
     }
 
     @PostMapping
     public Order createOrder(@RequestBody Order order)
     {
-        return orderRepository.save(order);
+        return orderService.save(order);
     }
 }
