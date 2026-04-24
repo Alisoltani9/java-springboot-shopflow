@@ -3,9 +3,8 @@ package soltani.code.shopflow.controller;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import soltani.code.shopflow.entity.Order;
-import soltani.code.shopflow.entity.User;
-import soltani.code.shopflow.repository.UserRepository;
 import soltani.code.shopflow.service.OrderService;
+import soltani.code.shopflow.service.UserService;
 
 import java.util.List;
 
@@ -14,13 +13,12 @@ import java.util.List;
 public class OrderController {
 
     private final OrderService orderService;
-    private final UserRepository userRepository;
-
+    private final UserService userService;
     public OrderController(OrderService orderService,
-                           UserRepository userRepository)
+                           UserService userService)
     {
         this.orderService = orderService;
-        this.userRepository = userRepository;
+        this.userService = userService;
 
     }
 
@@ -30,8 +28,9 @@ public class OrderController {
         String username = SecurityContextHolder.getContext()
                 .getAuthentication().getName();
 
-        User user = userRepository.findByUsername(username).orElseThrow();
-        return orderService.findByUserId(user.getId());
+        Long userId = userService.findUserIdByUsername(username);
+        return orderService.findByUserId(userId);
+
     }
 
     @PostMapping

@@ -1,9 +1,7 @@
 package soltani.code.shopflow.controller;
 
-import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.web.bind.annotation.*;
 import soltani.code.shopflow.entity.Product;
-import soltani.code.shopflow.repository.ProductRepository;
 import soltani.code.shopflow.service.ProductService;
 
 import java.util.List;
@@ -12,12 +10,10 @@ import java.util.List;
 @RequestMapping("/api/products")
 public class ProductController {
 
-    private final ProductRepository productRepository;
     private final ProductService productService;
 
-    public ProductController(ProductRepository productRepository, ProductService productService)
+    public ProductController(ProductService productService)
     {
-        this.productRepository = productRepository;
         this.productService = productService;
     }
 
@@ -30,14 +26,13 @@ public class ProductController {
     @GetMapping("/{id}")
     public Product getProductById(@PathVariable Long id)
     {
-        return productRepository.findById(id).orElseThrow();
+        return productService.getProductById(id);
     }
 
     @PostMapping
-    @CacheEvict(value = "products", allEntries = true)
     public Product save(@RequestBody Product product)
     {
-        return productRepository.save(product);
+        return productService.save(product);
     }
 
 

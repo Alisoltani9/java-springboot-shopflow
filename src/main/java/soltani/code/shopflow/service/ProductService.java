@@ -22,8 +22,13 @@ public class ProductService {
         return productRepository.findAll();
     }
 
-    @CacheEvict(value = "products", allEntries = true)
+    @CacheEvict(value = {"products", "product"}, allEntries = true)
     public Product save(Product product) {
         return productRepository.save(product);
+    }
+
+    @Cacheable(value = "product" , key = "#productId")
+    public Product getProductById(Long productId) {
+        return productRepository.findById(productId).orElseThrow();
     }
 }
