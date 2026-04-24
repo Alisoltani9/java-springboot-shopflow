@@ -3,22 +3,24 @@ package soltani.code.shopflow.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
 
-
-@Data
 @Entity
-@Table(name = "products")
-public class Product implements Serializable {
-
+@Data
+@Table(name = "order_items")
+public class OrderItem {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;
-    private String description;
+    private Long orderId;
+
+    private Long productId;
+
+    private Integer quantity;
+
     private BigDecimal price;
-    private Integer stock;
+
+
 }
