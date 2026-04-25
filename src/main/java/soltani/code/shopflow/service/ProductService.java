@@ -13,9 +13,11 @@ import java.util.List;
 public class ProductService {
 
     private final ProductRepository productRepository;
+    private final ProductSearchService productSearchService;
 
-    public ProductService(ProductRepository productRepository) {
+    public ProductService(ProductRepository productRepository , ProductSearchService productSearchService) {
         this.productRepository = productRepository;
+        this.productSearchService = productSearchService;
     }
 
     @Cacheable("products")
@@ -25,7 +27,10 @@ public class ProductService {
 
     @CacheEvict(value = {"products", "product"}, allEntries = true)
     public Product save(Product product) {
-        return productRepository.save(product);
+
+        Product savedProduct = productRepository.save(product);
+        productSearchService.indexProduct(savedProduct);
+        return savedProduct;
     }
 
     @Cacheable(value = "product" , key = "#productId")
