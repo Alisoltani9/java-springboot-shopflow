@@ -16,5 +16,50 @@ services:
     environment:
       KAFKA_BROKER_ID: 1
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+
+  postgres:
+    image: postgres
+    container_name: shopflow-db
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: shopflow
+      POSTGRES_USER: ali
+      POSTGRES_PASSWORD: 23393540
+
+  redis:
+    image: redis
+    container_name: redis
+    ports:
+      - "6379:6379"
+
+  elasticsearch:
+    image: elasticsearch:8.12.0
+    container_name: elasticsearch
+    ports:
+      - "9200:9200"
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+
+  shopflow:
+    image: shopflow:latest
+    container_name: shopflow-app
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+      - redis
+      - kafka
+      - elasticsearch
+    restart: on-failure
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/shopflow
+      SPRING_DATASOURCE_USERNAME: ali
+      SPRING_DATASOURCE_PASSWORD: 23393540
+      SPRING_DATA_REDIS_HOST: redis
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+      SPRING_ELASTICSEARCH_URIS: http://elasticsearch:9200
+      JWT_SECRET: 5fa391c494a25ef4659a3d53135cb6fce2d7e6fe0b607f3aaa02a3e9f650e4c8
