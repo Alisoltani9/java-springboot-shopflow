@@ -4,6 +4,7 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import soltani.code.shopflow.entity.Product;
+import soltani.code.shopflow.exception.ResourceNotFoundException;
 import soltani.code.shopflow.repository.ProductRepository;
 
 import java.util.List;
@@ -29,6 +30,9 @@ public class ProductService {
 
     @Cacheable(value = "product" , key = "#productId")
     public Product getProductById(Long productId) {
-        return productRepository.findById(productId).orElseThrow();
+        return productRepository.findById(productId).orElseThrow
+                (() -> new ResourceNotFoundException
+                        ("Product not found with id: " + productId));
+
     }
 }

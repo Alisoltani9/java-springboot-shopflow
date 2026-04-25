@@ -1,5 +1,6 @@
 package soltani.code.shopflow.controller;
 
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,13 +24,14 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public User register(@RequestBody RegisterRequest request)
+
+    public User register(@Valid @RequestBody RegisterRequest request)
     {
         return userService.register(request);
     }
 
     @PostMapping("/login")
-    public ResponseEntity<Map<String, String>> login(@RequestBody LoginRequest request)
+    public ResponseEntity<Map<String, String>> login(@Valid @RequestBody LoginRequest request)
     {
         return userService.login(request);
     }
