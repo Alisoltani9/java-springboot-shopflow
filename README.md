@@ -14,6 +14,19 @@ A production-grade ecommerce REST API built with Spring Boot. Features JWT authe
 
 ---
 
+## Branches
+
+| Branch | Description |
+|---|---|
+| `main` | Full version with Kafka, Elasticsearch, Redis |
+| `aws` | Lightweight version deployed on AWS (no Kafka/Elasticsearch) |
+
+## Live Demo
+> Running on AWS EC2 (lightweight version — Kafka and Elasticsearch require additional infrastructure)
+
+Base URL: `http://13.63.198.160:8080`
+
+
 ## Features
 
 - **JWT Authentication** — stateless auth with role-based access control (USER / ADMIN)
