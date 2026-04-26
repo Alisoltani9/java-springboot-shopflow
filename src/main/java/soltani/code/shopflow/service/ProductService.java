@@ -1,5 +1,6 @@
 package soltani.code.shopflow.service;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -10,15 +11,12 @@ import soltani.code.shopflow.repository.ProductRepository;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class ProductService {
 
     private final ProductRepository productRepository;
-    private final ProductSearchService productSearchService;
 
-    public ProductService(ProductRepository productRepository , ProductSearchService productSearchService) {
-        this.productRepository = productRepository;
-        this.productSearchService = productSearchService;
-    }
+
 
     @Cacheable("products")
     public List<Product> getAllProducts() {
@@ -28,9 +26,8 @@ public class ProductService {
     @CacheEvict(value = {"products", "product"}, allEntries = true)
     public Product save(Product product) {
 
-        Product savedProduct = productRepository.save(product);
-        productSearchService.indexProduct(savedProduct);
-        return savedProduct;
+        return productRepository.save(product);
+
     }
 
     @Cacheable(value = "product" , key = "#productId")
