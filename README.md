@@ -7,6 +7,7 @@
 ![Kafka](https://img.shields.io/badge/Apache_Kafka-black?style=flat-square&logo=apachekafka)
 ![Elasticsearch](https://img.shields.io/badge/Elasticsearch-005571?style=flat-square&logo=elasticsearch)
 ![Docker](https://img.shields.io/badge/Docker-blue?style=flat-square&logo=docker)
+![AWS](https://img.shields.io/badge/AWS-EC2-orange?style=flat-square&logo=amazonaws)
 
 A production-grade ecommerce REST API built with Spring Boot. Features JWT authentication, Redis caching, Kafka event streaming, Elasticsearch product search, and full Docker support.
 
@@ -20,6 +21,8 @@ A production-grade ecommerce REST API built with Spring Boot. Features JWT authe
 |---|---|
 | `main` | Full version with Kafka, Elasticsearch, Redis |
 | `aws` | Lightweight version deployed on AWS (no Kafka/Elasticsearch) |
+
+---
 
 ## Live Demo
 > Running on AWS EC2 (lightweight version — Kafka and Elasticsearch require additional infrastructure)
@@ -117,6 +120,10 @@ cd java-springboot-shopflow
 
 # Build the jar
 ./mvnw clean package -DskipTests
+
+# Copy environment variables
+cp .env.example .env
+# Edit .env with your values
 
 # Start everything (app + PostgreSQL + Redis + Kafka + Elasticsearch)
 docker-compose up --build
