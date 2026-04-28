@@ -27,7 +27,7 @@ A production-grade ecommerce REST API built with Spring Boot. Features JWT authe
 ## Live Demo
 > Running on AWS EC2 (lightweight version — Kafka and Elasticsearch require additional infrastructure)
 
-Base URL: `http://13.63.198.160:8080`
+Base URL: `http://13.63.198.160`
 
 
 ## Features
